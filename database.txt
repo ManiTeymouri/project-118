@@ -1,2 +1,1 @@
-{'Name': 'Mani', 'Phone': '0921000000', 'Address': 'Karaj'}
-
+{'location_status': 'Residental', 'Name': 'Mani', 'Phone': '02634477188', 'Address': 'jkldsajldksa'}

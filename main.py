@@ -3,13 +3,15 @@ DATABASE = "database.txt"
 class account:
 
     DATABASE_DICT = {
+            "location_status":"",
             "Name":"",
             "Phone":"",
             "Address":"",
     }
 
-    def create(Name: str,Phone: int,Address: str):
+    def create(location_status: int, Name: str,Phone: str,Address: str):
         # information of account 
+        account.DATABASE_DICT["location_status"] = location_status
         account.DATABASE_DICT["Name"] = Name
         account.DATABASE_DICT["Phone"] = Phone
         account.DATABASE_DICT["Address"] = Address
@@ -89,11 +91,51 @@ while True:
                 account.search(search)
                 print("------------------------")
             case 2:
-                Name = input("Enter the name :")
-                Phone = input("Enter Phone number :")
-                Address = input("Enter Address :")
 
-                account.create(Name,Phone,Address)
+                while True:
+                    try:
+                        print("--------------------------")
+                        print("1.Residental\n2.Office\n3.Markets\n")
+                        print("--------------------------")                    
+                        location_status = int(input("Enter between options :"))
+                        match location_status:
+                            case 1:
+                                location_status = "Residental"
+                                break
+                            case 2:
+                                location_status = "Office"
+                                break
+                            case 3:
+                                location_status = "Markets"
+                                break
+                            case value:
+                                print("please choose between options.")
+                    except ValueError:
+                        print("Please Enter a number not string")
+                        print("====================================")
+                        
+                Name = input("Enter Name :")
+                while True:
+                    try:
+                        Phone = input("Enter phonenumber : ")
+                        if Phone[0] == "0":
+                            Phone = Phone.replace(Phone[0],"")
+                            int(Phone)
+                        else:
+                            int(Phone)
+                        Phone = str(Phone)
+                        Phone = "0" + Phone
+                        if len(Phone) == 11:
+                            break
+                        else:
+                            print("please enter correct number (11 digit)")
+                    except ValueError:
+                        print("Please Enter a number not string")
+                        print("====================================")
+                
+                Address = input("Enter Address :")
+                account.create(location_status,Name,Phone,Address)
+
             case 3:
                 ...
             case 4:
