@@ -1,14 +1,14 @@
-DATABASE = "database.txt"
+PhoneBASE = "Phonebase.txt"
 
 class account:
     # این متد خط های خالی رو داخل دیتا بیس پاک میکنه
     def __remove_empty_lines():
-            with open(DATABASE, 'r') as file:
+            with open(PhoneBASE, 'r') as file:
                 lines = [line for line in file if line.strip()]
-            with open(DATABASE, 'w') as file:
+            with open(PhoneBASE, 'w') as file:
                 file.writelines(lines)
     __remove_empty_lines()
-    DATABASE_DICT = {
+    PhoneBASE_DICT = {
             "location_status":"",
             "Name":"",
             "Phone":"",
@@ -17,7 +17,7 @@ class account:
 
     # این متد کمک میکنه تا من به دیتا های داخل دیتابیس دسترسی پیدا کنم و اونارو تبدیل به دیکشنری کنم
     def __Convert_DATA():
-        with open(DATABASE,"r") as file:
+        with open(PhoneBASE,"r") as file:
             lines = file.readlines()
         List_Lines = dict()
         # lines to dict
@@ -34,24 +34,24 @@ class account:
     # متد ساخت اکانت 
     def create(location_status: int, Name: str,Phone: str,Address: str):
         # information of account 
-        account.DATABASE_DICT["location_status"] = location_status.lower()
-        account.DATABASE_DICT["Name"] = Name.lower()
-        account.DATABASE_DICT["Phone"] = Phone.lower()
-        account.DATABASE_DICT["Address"] = Address.lower()
+        account.PhoneBASE_DICT["location_status"] = location_status.lower()
+        account.PhoneBASE_DICT["Name"] = Name.lower()
+        account.PhoneBASE_DICT["Phone"] = Phone.lower()
+        account.PhoneBASE_DICT["Address"] = Address.lower()
 
         # check if phone exist don't be added
-        file = open(DATABASE,"r")
-        DATABASE_LINES = file.readlines()
+        file = open(PhoneBASE,"r")
+        PhoneBASE_LINES = file.readlines()
         file.close()
         Pointer = 0
-        for i in range(len(DATABASE_LINES)):
-            if Phone in DATABASE_LINES[i]:
+        for i in range(len(PhoneBASE_LINES)):
+            if Phone in PhoneBASE_LINES[i]:
                 Pointer += 1
        
         # add Number 
         if Pointer == 0:
-            file = open(DATABASE,"a")
-            file.write(f"{str(account.DATABASE_DICT)}\n")
+            file = open(PhoneBASE,"a")
+            file.write(f"{str(account.PhoneBASE_DICT)}\n")
             file.close()
             print("------------------------")
             print(f"{Phone} added .")
@@ -68,19 +68,19 @@ class account:
         mydict = account.__Convert_DATA()
         Pointer = 0
         for key,value in mydict.items():
-                    if location_status in value["location_status"] and data in value["Name"]:
+                    if location_status in value["location_status"] and Phone in value["Name"]:
                         print(f"==================={value['Name']}===================")
                         for lil_key,lil_value in value.items():
                             print(f"{lil_key} : {lil_value}")
                         Pointer += 1
                         print(f"=====================================================")
-                    elif location_status in value["location_status"] and data in value["Phone"]:
+                    elif location_status in value["location_status"] and Phone in value["Phone"]:
                         print(f"==================={value['Name']}===================")
                         for lil_key,lil_value in value.items():
                             print(f"{lil_key} : {lil_value}")
                         print(f"=====================================================")
                         Pointer += 1
-                    elif location_status in value["location_status"] and data in value["Address"]:
+                    elif location_status in value["location_status"] and Phone in value["Address"]:
                         print(f"==================={value['Name']}===================")
                         for lil_key,lil_value in value.items():
                             print(f"{lil_key} : {lil_value}")
@@ -91,7 +91,7 @@ class account:
         account.__remove_empty_lines()
 
     def delete(location_status,Phone):
-        with open(DATABASE,"r") as file:
+        with open(PhoneBASE,"r") as file:
             lines = file.readlines()
         Pointer = 0
         for i in range(len(lines)):
@@ -102,7 +102,7 @@ class account:
         if Pointer == 0:
             print("Number not exists.")
         else:
-            with open(DATABASE,"w") as file:
+            with open(PhoneBASE,"w") as file:
                 file.writelines(lines)
                 print("============================")
                 print(f"{Phone} deleted.")
