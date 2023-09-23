@@ -1,2 +1,8 @@
-{'location_status': 'residental', 'Name': 'mani', 'Phone': '02645678911', 'Address': 'sdhjkashdkjsahdksadhsajk'}
-{'location_status': 'markets', 'Name': 'dhjsakhdjskadh', 'Phone': '01234567899', 'Address': 'aadsajdks'}
+{'location_status': 'residental', 'Name': 'mani', 'Phone': '02645678911', 'Address': 'karaj'}
+{'location_status': 'residental', 'Name': 'reza', 'Phone': '02645678914', 'Address': 'karaj'}
+{'location_status': 'residental', 'Name': 'qolam', 'Phone': '02645678916', 'Address': 'karaj'}
+{'location_status': 'residental', 'Name': 'amir', 'Phone': '02645678914', 'Address': 'karaj'}
+{'location_status': 'markets', 'Name': 'koroosh market', 'Phone': '01234567899', 'Address': 'karaj'}
+{'location_status': 'markets', 'Name': 'amirian', 'Phone': '01234567893', 'Address': 'karaj'}
+{'location_status': 'markets', 'Name': 'karimian', 'Phone': '01234567892', 'Address': 'karaj'}
+{'location_status': 'markets', 'Name': 'maqaze ali', 'Phone': '01234567891', 'Address': 'karaj'}

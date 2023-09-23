@@ -9,6 +9,24 @@ class account:
             "Address":"",
     }
 
+    # این متد کمک میکنه تا من به دیتا های داخل دیتابیس دسترسی پیدا کنم و اونارو تبدیل به دیکشنری کنم
+    def __Convert_DATA():
+        file = open(DATABASE,"r")
+        lines = file.readlines()
+        file.close()
+        List_Lines = dict()
+        # lines to dict
+        for  i in range(len(lines)):
+            List_Lines[f"{i}"] = lines[i]
+        # convert all value in lines to dict
+        for key,value in List_Lines.items():
+            value = eval(value)
+            List_Lines[key] = value
+        return List_Lines
+
+
+
+
     def create(location_status: int, Name: str,Phone: str,Address: str):
         # information of account 
         account.DATABASE_DICT["location_status"] = location_status.lower()
@@ -39,45 +57,33 @@ class account:
             print("------------------------")
 
     def search(location_status,data):
-        Listed_Data = dict()
-        file = open(DATABASE,"r")
-        lines = file.readlines() # read database lines
-        file.close() #  close file 
-        for line in range(len(lines)): # loop in lines
-            Listed_Data[f"{line}"] = lines[line] # Make New Dict for search
-
-        for key,value in Listed_Data.items():
-            value = eval(value) # Convert Text to dict format
-            Listed_Data[key] = value
+        mydict = account.__Convert_DATA()
         Pointer = 0
-        for key,value in Listed_Data.items(): # search on Dict
-            if location_status in value["location_status"] and data in value["Phone"]:
-                for keys,items in value.items():
-                    print(f"{keys}: {items}")
-                Pointer += 1
-                print("-----------------------------")
-            elif location_status in value["location_status"] and data in value["Name"]:
-                for keys,items in value.items():
-                    print(f"{keys}: {items}")
-                Pointer += 1
-                print("-----------------------------")
-            elif location_status in value["location_status"] and data in value["Address"]:
-                for keys,items in value.items():
-                    print(f"{keys}: {items}")
-                Pointer += 1
-                print("-----------------------------")
+        for key,value in mydict.items():
+                    if location_status in value["location_status"] and data in value["Name"]:
+                        print(f"==================={value['Name']}===================")
+                        for lil_key,lil_value in value.items():
+                            print(f"{lil_key} : {lil_value}")
+                        print(f"=====================================================")
+                    elif location_status in value["location_status"] and data in value["Phone"]:
+                        print(f"==================={value['Name']}===================")
+                        for lil_key,lil_value in value.items():
+                            print(f"{lil_key} : {lil_value}")
+                        print(f"=====================================================")
+                        Pointer += 1
+                    elif location_status in value["location_status"] and data in value["Address"]:
+                        print(f"==================={value['Name']}===================")
+                        for lil_key,lil_value in value.items():
+                            print(f"{lil_key} : {lil_value}")
+                        print(f"=====================================================")
         if Pointer == 0:
-            print("------------------------")
-            print("Account Not Exist") 
-            print("------------------------")
+            print("Account not Exist")
 
-
-
+             
                             
 
     
         
-
 
 
 print("Welcome to Oprator 118 Account")
