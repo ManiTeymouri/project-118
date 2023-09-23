@@ -1,7 +1,13 @@
 DATABASE = "database.txt"
 
 class account:
-
+    # این متد خط های خالی رو داخل دیتا بیس پاک میکنه
+    def __remove_empty_lines():
+            with open(DATABASE, 'r') as file:
+                lines = [line for line in file if line.strip()]
+            with open(DATABASE, 'w') as file:
+                file.writelines(lines)
+    __remove_empty_lines()
     DATABASE_DICT = {
             "location_status":"",
             "Name":"",
@@ -11,9 +17,8 @@ class account:
 
     # این متد کمک میکنه تا من به دیتا های داخل دیتابیس دسترسی پیدا کنم و اونارو تبدیل به دیکشنری کنم
     def __Convert_DATA():
-        file = open(DATABASE,"r")
-        lines = file.readlines()
-        file.close()
+        with open(DATABASE,"r") as file:
+            lines = file.readlines()
         List_Lines = dict()
         # lines to dict
         for  i in range(len(lines)):
@@ -26,7 +31,7 @@ class account:
 
 
 
-
+    # متد ساخت اکانت 
     def create(location_status: int, Name: str,Phone: str,Address: str):
         # information of account 
         account.DATABASE_DICT["location_status"] = location_status.lower()
@@ -55,8 +60,10 @@ class account:
             print("------------------------")
             print(f"{Phone} Number Exists")
             print("------------------------")
+        account.__remove_empty_lines()
 
-    def search(location_status,data):
+    #متد سرچ کردن  
+    def search(location_status,Phone):
         mydict = account.__Convert_DATA()
         Pointer = 0
         for key,value in mydict.items():
@@ -64,6 +71,7 @@ class account:
                         print(f"==================={value['Name']}===================")
                         for lil_key,lil_value in value.items():
                             print(f"{lil_key} : {lil_value}")
+                        Pointer += 1
                         print(f"=====================================================")
                     elif location_status in value["location_status"] and data in value["Phone"]:
                         print(f"==================={value['Name']}===================")
@@ -75,11 +83,24 @@ class account:
                         print(f"==================={value['Name']}===================")
                         for lil_key,lil_value in value.items():
                             print(f"{lil_key} : {lil_value}")
+                        Pointer += 1
                         print(f"=====================================================")
         if Pointer == 0:
             print("Account not Exist")
+        account.__remove_empty_lines()
+    def delete(location_status,Phone):
+        with open(DATABASE,"r") as file:
+            lines = file.readlines()
+        for i in range(len(lines)):
+            if location_status in lines[i] and Phone in lines[i]:
+                lines[i] = "" 
+        with open(DATABASE,"w") as file:
+            file.writelines(lines)
 
              
+
+
+
                             
 
     
@@ -174,7 +195,32 @@ while True:
             case 3:
                 ...
             case 4:
-                ...
+                while True:
+                    try:
+                        print("-------------------")
+                        print("1.Residental\n2.Office\n3.Markets\n4.all types")
+                        print("-------------------")
+                        information_status = int(input("choose option :"))
+                        match location_status:
+                            case 1:
+                                location_status = "Residental"
+                                break
+                            case 2: 
+                                location_status = "Office"
+                                break
+                            case 3:
+                                location_status = "Markets"
+                                break
+                            case 4:
+                                location_status = ""
+                                break
+                            case value:
+                                print("please choose between options.")
+                    except TypeError:
+                        print("please Enter only number.")
+
+                        
+                    
             case 5:
                 print("see you later...👋👋👋")
                 exit()
