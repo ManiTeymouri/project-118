@@ -64,6 +64,7 @@ class account:
 
     #متد سرچ کردن  
     def search(location_status,Phone):
+
         mydict = account.__Convert_DATA()
         Pointer = 0
         for key,value in mydict.items():
@@ -88,25 +89,25 @@ class account:
         if Pointer == 0:
             print("Account not Exist")
         account.__remove_empty_lines()
+
     def delete(location_status,Phone):
         with open(DATABASE,"r") as file:
             lines = file.readlines()
+        Pointer = 0
         for i in range(len(lines)):
             if location_status in lines[i] and Phone in lines[i]:
-                lines[i] = "" 
-        with open(DATABASE,"w") as file:
-            file.writelines(lines)
-
-             
-
-
-
-                            
-
-    
-        
-
-
+                lines[i] = ""
+            else:
+                Pointer += 1
+        if Pointer == 0:
+            print("Number not exists.")
+        else:
+            with open(DATABASE,"w") as file:
+                file.writelines(lines)
+                print("============================")
+                print(f"{Phone} deleted.")
+                print("============================")
+           
 print("Welcome to Oprator 118 Account")
 print("-------------------------------")
 
@@ -200,7 +201,7 @@ while True:
                         print("-------------------")
                         print("1.Residental\n2.Office\n3.Markets\n4.all types")
                         print("-------------------")
-                        information_status = int(input("choose option :"))
+                        location_status = int(input("choose option :"))
                         match location_status:
                             case 1:
                                 location_status = "Residental"
@@ -218,9 +219,9 @@ while True:
                                 print("please choose between options.")
                     except TypeError:
                         print("please Enter only number.")
-
-                        
-                    
+                
+                Phone = input("Enter phone number :")
+                account.delete(location_status.lower(),Phone.lower())
             case 5:
                 print("see you later...👋👋👋")
                 exit()

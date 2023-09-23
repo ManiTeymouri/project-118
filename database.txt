@@ -1,7 +1,3 @@
 {'location_status': 'residental', 'Name': 'mani', 'Phone': '02645678911', 'Address': 'karaj'}
-{'location_status': 'residental', 'Name': 'reza', 'Phone': '02645678914', 'Address': 'karaj'}
 {'location_status': 'residental', 'Name': 'qolam', 'Phone': '02645678916', 'Address': 'karaj'}
-{'location_status': 'residental', 'Name': 'amir', 'Phone': '02645678914', 'Address': 'karaj'}       
 {'location_status': 'markets', 'Name': 'amirian', 'Phone': '01234567893', 'Address': 'karaj'}
-{'location_status': 'markets', 'Name': 'karimian', 'Phone': '01234567892', 'Address': 'karaj'}
-{'location_status': 'office', 'Name': 'bank mellat', 'Phone': '02645678917', 'Address': 'karaj'}
