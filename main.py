@@ -11,10 +11,10 @@ class account:
 
     def create(location_status: int, Name: str,Phone: str,Address: str):
         # information of account 
-        account.DATABASE_DICT["location_status"] = location_status
-        account.DATABASE_DICT["Name"] = Name
-        account.DATABASE_DICT["Phone"] = Phone
-        account.DATABASE_DICT["Address"] = Address
+        account.DATABASE_DICT["location_status"] = location_status.lower()
+        account.DATABASE_DICT["Name"] = Name.lower()
+        account.DATABASE_DICT["Phone"] = Phone.lower()
+        account.DATABASE_DICT["Address"] = Address.lower()
 
         # check if phone exist don't be added
         file = open(DATABASE,"r")
@@ -38,7 +38,7 @@ class account:
             print(f"{Phone} Number Exists")
             print("------------------------")
 
-    def search(data):
+    def search(location_status,data):
         Listed_Data = dict()
         file = open(DATABASE,"r")
         lines = file.readlines() # read database lines
@@ -51,15 +51,21 @@ class account:
             Listed_Data[key] = value
         Pointer = 0
         for key,value in Listed_Data.items(): # search on Dict
-            if data in value["Phone"]:
-                print(value)
+            if location_status in value["location_status"] and data in value["Phone"]:
+                for keys,items in value.items():
+                    print(f"{keys}: {items}")
                 Pointer += 1
-            elif data in value["Name"]:
-                print(value)
+                print("-----------------------------")
+            elif location_status in value["location_status"] and data in value["Name"]:
+                for keys,items in value.items():
+                    print(f"{keys}: {items}")
                 Pointer += 1
-            elif data in value["Address"]:
-                print(value)
+                print("-----------------------------")
+            elif location_status in value["location_status"] and data in value["Address"]:
+                for keys,items in value.items():
+                    print(f"{keys}: {items}")
                 Pointer += 1
+                print("-----------------------------")
         if Pointer == 0:
             print("------------------------")
             print("Account Not Exist") 
@@ -78,6 +84,7 @@ print("Welcome to Oprator 118 Account")
 print("-------------------------------")
 
 while True:
+    print("-------------------------------")
     print("1.search Accounts\n2.create Account\n3.edit Account\n4.delete Account\n5.exit")
     print("-------------------------------")
     try:
@@ -85,11 +92,34 @@ while True:
         print("-------------------------------")
         match option:
             case 1:
-                print("------------------------")
-                print("You can search by Name/Phone/Address")
-                search = input("Name/Phone/Address ? :")
-                account.search(search)
-                print("------------------------")
+                while True:
+                    print("-------------------")
+                    print("please choose location status you want search.")
+                    print("1.Residental\n2.Office\n3.Markets\n4.all types")
+                    print("-------------------")
+                    location_status = int(input(""))
+                    print("-------------------")
+                    match location_status:
+                        case 1:
+                            location_status = "Residental"
+                            break
+                        case 2: 
+                            location_status = "Office"
+                            break
+                        case 3:
+                            location_status = "Markets"
+                            break
+                        case 4:
+                            location_status = ""
+                            break
+                        case value:
+                            print("please choose between options.")
+                print("--------------------------------------------")
+                print("you can search by Phone/Name/Address : ")
+                search = input("search :>")
+                print("--------------------------------------------")
+                account.search(location_status.lower(),search.lower())
+                print("--------------------------------------------")
             case 2:
 
                 while True:
@@ -113,7 +143,6 @@ while True:
                     except ValueError:
                         print("Please Enter a number not string")
                         print("====================================")
-                        
                 Name = input("Enter Name :")
                 while True:
                     try:

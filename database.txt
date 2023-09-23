@@ -1,1 +1,2 @@
-{'location_status': 'Residental', 'Name': 'Mani', 'Phone': '02100000000', 'Address': 'jkldsajldksa'}
+{'location_status': 'residental', 'Name': 'mani', 'Phone': '02645678911', 'Address': 'sdhjkashdkjsahdksadhsajk'}
+{'location_status': 'markets', 'Name': 'dhjsakhdjskadh', 'Phone': '01234567899', 'Address': 'aadsajdks'}
