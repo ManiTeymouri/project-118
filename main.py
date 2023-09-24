@@ -1,6 +1,3 @@
-from ast import While
-
-
 DATABASE = "database.txt"
 
 class account:
@@ -56,38 +53,39 @@ class account:
             file = open(DATABASE,"a")
             file.write(f"{str(account.DATABASE_DICT)}\n")
             file.close()
-            print("------------------------")
+            print(f"=====================================================")
             print(f"{Phone} added .")
-            print("------------------------")
+            print(f"=====================================================")
         else:
-            print("------------------------")
+            print(f"=====================================================")
             print(f"{Phone} Number Exists")
-            print("------------------------")
+            print(f"=====================================================")
         account.__remove_empty_lines()
 
     #متد سرچ کردن  
     def search(location_status,data):
 
         mydict = account.__Convert_DATA()
-        Pointer = 0
+        global search_Pointer
+        search_Pointer = 0
         for key,value in mydict.items():
                     if location_status in value["location_status"] and data in value["Name"]:
                         print(f"==================={value['Name']}===================")
                         print(f"Account ID : {key}\nLocation_Status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
                         print(f"=====================================================")
-                        Pointer += 1
+                        search_Pointer += 1
                     elif location_status in value["location_status"] and data in value["Phone"]:
                         print(f"==================={value['Name']}===================")
                         print(f"Account ID : {key}\nLocation_Status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
                         print(f"=====================================================")
-                        Pointer += 1
-                    elif location_status in value["location_status"] and Phone in value["Address"]:
+                        search_Pointer += 1
+                    elif location_status in value["location_status"] and data in value["Address"]:
                         print(f"==================={value['Name']}===================")
                         print(f"Account ID : {key}\nLocation_Status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
                         print(f"=====================================================")
-                        Pointer += 1
-        if Pointer == 0:
-            print("Account not Exist")
+                        search_Pointer += 1
+        if search_Pointer == 0:
+            print(f"=====================================================")
         account.__remove_empty_lines()
 
     def delete(location_status: str,data: str):
@@ -95,6 +93,8 @@ class account:
         account.search(location_status,data)
         list_ID = list(Listed_DATA.keys())
         while True:
+                if search_Pointer == 0:
+                    break
                 try:
                     ask = int(input("Enter which account you want delete (By Account ID) : "))
                     if ask in list_ID:
@@ -102,30 +102,42 @@ class account:
                         with open(DATABASE,'w') as file:
                             for value in Listed_DATA.values():
                                 file.write(f"{str(value)}\n")
+                        print(f"=====================================================")
                         print(f"Account ID : {ask} Successfully deleted. ")
+                        print(f"=====================================================")
                         account.__remove_empty_lines()
                         break
                     else:
+                        print(f"=====================================================")
                         print(f"{ask} not found, please try again.")
+                        print(f"=====================================================")
+
                 except ValueError:
-                    print("Please enter Only number not string")    
+                    print(f"=====================================================")
+                    print("Please enter Only number not string")
+                    print(f"=====================================================")
+    
+
     def edit(location_status: str,data: str):
         Listed_DATA = account.__Convert_DATA()
         account.search(location_status,data)
         list_ID = list(Listed_DATA.keys())
         while True:
+                if search_Pointer == 0:
+                    break
                 try:
                     ask = int(input("Enter which account you want edit (By Account ID) : "))
                     if ask in list_ID:
                         choosed_account: dict = Listed_DATA[ask]
-                        print("-------------------------")
+                        print(f"=====================================================")
+                        print("choose what data do you want to change")
                         print("1.Location_status\n2.Name,\n3.Phone\n4.Address\n5.all the datas in account")
                         option = int(input("Enter which data do you want to change :"))
                         match option:
                             case 1:
                                 while True:
                                     try:
-                                        print("-------------------------")
+                                        print(f"=====================================================")
                                         print("1.Residental\n2.Office\n3.Markets")
                                         location_status = int(input("Enter location status :"))
                                         match location_status:
@@ -151,21 +163,38 @@ class account:
 
                             case 2:
                                 New_Name = input("Enter name you want to change : ")
-                                choosed_account["Name"] = New_Name
+                                choosed_account["Name"] = New_Name.lower()
                                 with open(DATABASE,'w') as file:
                                     for value in Listed_DATA.values():
                                         file.write(f"{str(value)}\n")
                                 print("All The Changes Applied.")
                             case 3:
-                                New_Phone = input("Enter phone you want to change : ")
+                                while True:
+                                    try:
+                                        New_Phone = input("Enter phone you want to change : ")
+                                        if New_Phone[0] == "0":
+                                            New_Phone = New_Phone.replace(New_Phone[0],"")
+                                            int(New_Phone)
+                                        else:
+                                            int(New_Phone)
+                                        New_Phone = str(New_Phone)
+                                        New_Phone = "0" + New_Phone
+                                        if len(New_Phone) == 11:
+                                            break
+                                        else:
+                                            print("please enter correct number (11 digit)")
+                                    except ValueError:
+                                        print("Please Enter a number not string")
+                                        print("====================================")
                                 choosed_account["Phone"] = New_Phone
                                 with open(DATABASE,'w') as file:
                                     for value in Listed_DATA.values():
                                         file.write(f"{str(value)}\n")
                                 print("All The Changes Applied.")
+
                             case 4:
                                 New_Address = input("Enter address you want to change : ")
-                                choosed_account["Address"] = New_Address
+                                choosed_account["Address"] = New_Address.lower()
                                 with open(DATABASE,'w') as file:
                                     for value in Listed_DATA.values():
                                         file.write(f"{str(value)}\n")
@@ -193,13 +222,30 @@ class account:
                                         print("-----------------------")
 
                                 New_Name = input("Enter name you want to change : ")
-                                New_Phone = input("Enter phone you want to change : ")
+                                while True:
+                                    try:
+                                        New_Phone = input("Enter phone you want to change : ")
+                                        if New_Phone[0] == "0":
+                                            New_Phone = New_Phone.replace(New_Phone[0],"")
+                                            int(New_Phone)
+                                        else:
+                                            int(New_Phone)
+                                        New_Phone = str(New_Phone)
+                                        New_Phone = "0" + New_Phone
+                                        if len(New_Phone) == 11:
+                                            break
+                                        else:
+                                            print("please enter correct number (11 digit)")
+                                    except ValueError:
+                                        print("Please Enter a number not string")
+                                        print("====================================")
                                 New_Address = input("Enter address you want to change : ")
 
                                 choosed_account["location_status"] = location_status
-                                choosed_account["Address"] = New_Address
-                                choosed_account["Phone"] = New_Phone
-                                choosed_account["Name"] = New_Name
+                                choosed_account["Address"] = New_Address.lower()
+                                choosed_account["Phone"] = New_Phone.lower()
+                                choosed_account["Name"] = New_Name.lower()
+
                                 with open(DATABASE,'w') as file:
                                     for value in Listed_DATA.values():
                                         file.write(f"{str(value)}\n")
@@ -226,7 +272,7 @@ print("-------------------------------")
 
 while True:
     print("-------------------------------")
-    print("1.search Accounts\n2.create Account\n3.edit Account\n4.delete Account\n5.exit")
+    print("1.search Accounts\n2.create Account\n3.edit Account\n4.delete Account\n5.list Account\n6.exit")
     print("-------------------------------")
     try:
         option = int(input("Enter Your Option:"))
@@ -362,8 +408,10 @@ while True:
                 location_status = location_status.lower()
                 data = input("search by Name/Address/Phone :").lower()
                 account.delete(location_status,data)
-
             case 5:
+                account.search("","")
+                cont = input("")
+            case 6:
                 print("see you later...👋👋👋")
                 exit()
             case value:
