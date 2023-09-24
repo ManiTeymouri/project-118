@@ -267,8 +267,9 @@ class account:
 
 
            
-print("Welcome to Oprator 118 Account")
+
 print("-------------------------------")
+print("Welcome to Oprator 118 Account")
 
 while True:
     print("-------------------------------")
