@@ -73,51 +73,29 @@ class account:
         for key,value in mydict.items():
                     if location_status in value["location_status"] and data in value["Name"]:
                         print(f"==================={value['Name']}===================")
-                        for lil_key,lil_value in value.items():
-                            print(f"{lil_key} : {lil_value}")
-                        Pointer += 1
+                        print(f"Account ID : {key}\nLocation_Status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
                         print(f"=====================================================")
+                        Pointer += 1
                     elif location_status in value["location_status"] and data in value["Phone"]:
                         print(f"==================={value['Name']}===================")
-                        for lil_key,lil_value in value.items():
-                            print(f"{lil_key} : {lil_value}")
+                        print(f"Account ID : {key}\nLocation_Status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
                         print(f"=====================================================")
                         Pointer += 1
                     elif location_status in value["location_status"] and Phone in value["Address"]:
                         print(f"==================={value['Name']}===================")
-                        for lil_key,lil_value in value.items():
-                            print(f"{lil_key} : {lil_value}")
-                        Pointer += 1
+                        print(f"Account ID : {key}\nLocation_Status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
                         print(f"=====================================================")
+                        Pointer += 1
         if Pointer == 0:
             print("Account not Exist")
         account.__remove_empty_lines()
 
     def delete(location_status: str,data: str):
         Listed_DATA = account.__Convert_DATA()
-        Pointer = 0
-        for key,value in Listed_DATA.items():
-            if location_status in value["location_status"] and data in value["Name"]:
-                print("-------------------------")
-                print(f"Account ID : {key}\nLocation_status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
-                print("-------------------------")
-                Pointer += 1
-            elif location_status in value["location_status"] and data in value["Phone"]:
-                print("-------------------------")
-                print(f"Account ID : {key}\nLocation_status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
-                print("-------------------------")
-                Pointer += 1
-            elif location_status in value["location_status"] and data in value["Address"]:
-                print("-------------------------")
-                print(f"Account ID : {key}\nLocation_status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
-                print("-------------------------")
-                Pointer += 1
-        
-        if Pointer == 0:
-            print("Account not Exist")
-
+        account.search(location_status,data)
         list_ID = list(Listed_DATA.keys())
         while True:
+                try:
                     ask = int(input("Enter which account you want delete (By Account ID) : "))
                     if ask in list_ID:
                         del Listed_DATA[ask]
@@ -129,8 +107,24 @@ class account:
                         break
                     else:
                         print(f"{ask} not found, please try again.")
+                except ValueError:
+                    print("Please enter Only number not string")    
+    def edit(location_status: str,data: str):
+        Listed_DATA = account.__Convert_DATA()
+        account.search(location_status,data)
+        list_ID = list(Listed_DATA.keys())
+        while True:
+                try:
+                    ask = int(input("Enter which account you want edit (By Account ID) : "))
+                    if ask in list_ID:
                         
-
+                        print(f"Account ID : {ask} Successfully edited. ")
+                        account.__remove_empty_lines()
+                        break
+                    else:
+                        print(f"{ask} not found, please try again.")
+                except ValueError:
+                    print("Please enter Only number not string")
 
 
 
