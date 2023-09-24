@@ -1,14 +1,17 @@
-PhoneBASE = "Phonebase.txt"
+from ast import While
+
+
+DATABASE = "database.txt"
 
 class account:
     # این متد خط های خالی رو داخل دیتا بیس پاک میکنه
     def __remove_empty_lines():
-            with open(PhoneBASE, 'r') as file:
+            with open(DATABASE, 'r') as file:
                 lines = [line for line in file if line.strip()]
-            with open(PhoneBASE, 'w') as file:
+            with open(DATABASE, 'w') as file:
                 file.writelines(lines)
     __remove_empty_lines()
-    PhoneBASE_DICT = {
+    DATABASE_DICT = {
             "location_status":"",
             "Name":"",
             "Phone":"",
@@ -17,12 +20,12 @@ class account:
 
     # این متد کمک میکنه تا من به دیتا های داخل دیتابیس دسترسی پیدا کنم و اونارو تبدیل به دیکشنری کنم
     def __Convert_DATA():
-        with open(PhoneBASE,"r") as file:
+        with open(DATABASE,"r") as file:
             lines = file.readlines()
         List_Lines = dict()
         # lines to dict
         for  i in range(len(lines)):
-            List_Lines[f"{i}"] = lines[i]
+            List_Lines[i] = lines[i]
         # convert all value in lines to dict
         for key,value in List_Lines.items():
             value = eval(value)
@@ -34,24 +37,24 @@ class account:
     # متد ساخت اکانت 
     def create(location_status: int, Name: str,Phone: str,Address: str):
         # information of account 
-        account.PhoneBASE_DICT["location_status"] = location_status.lower()
-        account.PhoneBASE_DICT["Name"] = Name.lower()
-        account.PhoneBASE_DICT["Phone"] = Phone.lower()
-        account.PhoneBASE_DICT["Address"] = Address.lower()
+        account.DATABASE_DICT["location_status"] = location_status.lower()
+        account.DATABASE_DICT["Name"] = Name.lower()
+        account.DATABASE_DICT["Phone"] = Phone.lower()
+        account.DATABASE_DICT["Address"] = Address.lower()
 
         # check if phone exist don't be added
-        file = open(PhoneBASE,"r")
-        PhoneBASE_LINES = file.readlines()
+        file = open(DATABASE,"r")
+        DATABASE_LINES = file.readlines()
         file.close()
         Pointer = 0
-        for i in range(len(PhoneBASE_LINES)):
-            if Phone in PhoneBASE_LINES[i]:
+        for i in range(len(DATABASE_LINES)):
+            if Phone in DATABASE_LINES[i]:
                 Pointer += 1
        
         # add Number 
         if Pointer == 0:
-            file = open(PhoneBASE,"a")
-            file.write(f"{str(account.PhoneBASE_DICT)}\n")
+            file = open(DATABASE,"a")
+            file.write(f"{str(account.DATABASE_DICT)}\n")
             file.close()
             print("------------------------")
             print(f"{Phone} added .")
@@ -63,18 +66,18 @@ class account:
         account.__remove_empty_lines()
 
     #متد سرچ کردن  
-    def search(location_status,Phone):
+    def search(location_status,data):
 
         mydict = account.__Convert_DATA()
         Pointer = 0
         for key,value in mydict.items():
-                    if location_status in value["location_status"] and Phone in value["Name"]:
+                    if location_status in value["location_status"] and data in value["Name"]:
                         print(f"==================={value['Name']}===================")
                         for lil_key,lil_value in value.items():
                             print(f"{lil_key} : {lil_value}")
                         Pointer += 1
                         print(f"=====================================================")
-                    elif location_status in value["location_status"] and Phone in value["Phone"]:
+                    elif location_status in value["location_status"] and data in value["Phone"]:
                         print(f"==================={value['Name']}===================")
                         for lil_key,lil_value in value.items():
                             print(f"{lil_key} : {lil_value}")
@@ -90,23 +93,47 @@ class account:
             print("Account not Exist")
         account.__remove_empty_lines()
 
-    def delete(location_status,Phone):
-        with open(PhoneBASE,"r") as file:
-            lines = file.readlines()
+    def delete(location_status: str,data: str):
+        Listed_DATA = account.__Convert_DATA()
         Pointer = 0
-        for i in range(len(lines)):
-            if location_status in lines[i] and Phone in lines[i]:
-                lines[i] = ""
-            else:
+        for key,value in Listed_DATA.items():
+            if location_status in value["location_status"] and data in value["Name"]:
+                print("-------------------------")
+                print(f"Account ID : {key}\nLocation_status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
+                print("-------------------------")
                 Pointer += 1
+            elif location_status in value["location_status"] and data in value["Phone"]:
+                print("-------------------------")
+                print(f"Account ID : {key}\nLocation_status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
+                print("-------------------------")
+                Pointer += 1
+            elif location_status in value["location_status"] and data in value["Address"]:
+                print("-------------------------")
+                print(f"Account ID : {key}\nLocation_status : {value['location_status']}\nName : {value['Name']}\nPhone : {value['Phone']}\nAddress : {value['Address']}")
+                print("-------------------------")
+                Pointer += 1
+        
         if Pointer == 0:
-            print("Number not exists.")
-        else:
-            with open(PhoneBASE,"w") as file:
-                file.writelines(lines)
-                print("============================")
-                print(f"{Phone} deleted.")
-                print("============================")
+            print("Account not Exist")
+
+        list_ID = list(Listed_DATA.keys())
+        while True:
+                    ask = int(input("Enter which account you want delete (By Account ID) : "))
+                    if ask in list_ID:
+                        del Listed_DATA[ask]
+                        with open(DATABASE,'w') as file:
+                            for value in Listed_DATA.values():
+                                file.write(f"{str(value)}\n")
+                        print(f"Account ID : {ask} Successfully deleted. ")
+                        account.__remove_empty_lines()
+                        break
+                    else:
+                        print(f"{ask} not found, please try again.")
+                        
+
+
+
+
            
 print("Welcome to Oprator 118 Account")
 print("-------------------------------")
@@ -198,30 +225,32 @@ while True:
             case 4:
                 while True:
                     try:
-                        print("-------------------")
+                        print("--------------------------")
                         print("1.Residental\n2.Office\n3.Markets\n4.all types")
-                        print("-------------------")
-                        location_status = int(input("choose option :"))
+                        print("--------------------------")                    
+                        location_status = int(input("Enter between options :"))
                         match location_status:
                             case 1:
                                 location_status = "Residental"
                                 break
-                            case 2: 
+                            case 2:
                                 location_status = "Office"
                                 break
                             case 3:
                                 location_status = "Markets"
                                 break
-                            case 4:
+                            case 4: 
                                 location_status = ""
                                 break
                             case value:
                                 print("please choose between options.")
-                    except TypeError:
-                        print("please Enter only number.")
-                
-                Phone = input("Enter phone number :")
-                account.delete(location_status.lower(),Phone.lower())
+                    except ValueError:
+                        print("Please Enter a number not string")
+                        print("====================================")
+                location_status = location_status.lower()
+                data = input("search by Name/Address/Phone :").lower()
+                account.delete(location_status,data)
+
             case 5:
                 print("see you later...👋👋👋")
                 exit()
