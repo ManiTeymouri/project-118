@@ -117,7 +117,99 @@ class account:
                 try:
                     ask = int(input("Enter which account you want edit (By Account ID) : "))
                     if ask in list_ID:
-                        
+                        choosed_account: dict = Listed_DATA[ask]
+                        print("-------------------------")
+                        print("1.Location_status\n2.Name,\n3.Phone\n4.Address\n5.all the datas in account")
+                        option = int(input("Enter which data do you want to change :"))
+                        match option:
+                            case 1:
+                                while True:
+                                    try:
+                                        print("-------------------------")
+                                        print("1.Residental\n2.Office\n3.Markets")
+                                        location_status = int(input("Enter location status :"))
+                                        match location_status:
+                                            case 1:
+                                                location_status = "residental"
+                                                break
+                                            case 2:
+                                                location_status = "office"
+                                                break
+                                            case 3:
+                                                location_status = "markets"
+                                                break
+                                            case value:
+                                                print("Please Enter betweens option")
+                                    except ValueError:
+                                        print("Please Enter only number")
+                                        print("-----------------------")
+                                choosed_account["location_status"] = location_status
+                                with open(DATABASE,'w') as file:
+                                    for value in Listed_DATA.values():
+                                        file.write(f"{str(value)}\n")
+                                print("All The Changes Applied.")
+
+                            case 2:
+                                New_Name = input("Enter name you want to change : ")
+                                choosed_account["Name"] = New_Name
+                                with open(DATABASE,'w') as file:
+                                    for value in Listed_DATA.values():
+                                        file.write(f"{str(value)}\n")
+                                print("All The Changes Applied.")
+                            case 3:
+                                New_Phone = input("Enter phone you want to change : ")
+                                choosed_account["Phone"] = New_Phone
+                                with open(DATABASE,'w') as file:
+                                    for value in Listed_DATA.values():
+                                        file.write(f"{str(value)}\n")
+                                print("All The Changes Applied.")
+                            case 4:
+                                New_Address = input("Enter address you want to change : ")
+                                choosed_account["Address"] = New_Address
+                                with open(DATABASE,'w') as file:
+                                    for value in Listed_DATA.values():
+                                        file.write(f"{str(value)}\n")
+                                print("All The Changes Applied.")
+                            case 5:
+                                while True:
+                                    try:
+                                        print("-------------------------")
+                                        print("1.Residental\n2.Office\n3.Markets")
+                                        location_status = int(input("Enter location status :"))
+                                        match location_status:
+                                            case 1:
+                                                location_status = "residental"
+                                                break
+                                            case 2:
+                                                location_status = "office"
+                                                break
+                                            case 3:
+                                                location_status = "markets"
+                                                break
+                                            case value:
+                                                print("Please Enter betweens option")
+                                    except ValueError:
+                                        print("Please Enter only number")
+                                        print("-----------------------")
+
+                                New_Name = input("Enter name you want to change : ")
+                                New_Phone = input("Enter phone you want to change : ")
+                                New_Address = input("Enter address you want to change : ")
+
+                                choosed_account["location_status"] = location_status
+                                choosed_account["Address"] = New_Address
+                                choosed_account["Phone"] = New_Phone
+                                choosed_account["Name"] = New_Name
+                                with open(DATABASE,'w') as file:
+                                    for value in Listed_DATA.values():
+                                        file.write(f"{str(value)}\n")
+                                print("All The Changes Applied.")
+
+
+
+                            case value:
+                                print("please choose between options.")
+                            
                         print(f"Account ID : {ask} Successfully edited. ")
                         account.__remove_empty_lines()
                         break
@@ -215,7 +307,33 @@ while True:
                 account.create(location_status,Name,Phone,Address)
 
             case 3:
-                ...
+                while True:
+                    try:
+                        print("--------------------------")
+                        print("1.Residental\n2.Office\n3.Markets\n4.all types")
+                        print("--------------------------")                    
+                        location_status = int(input("Enter between options :"))
+                        match location_status:
+                            case 1:
+                                location_status = "Residental"
+                                break
+                            case 2:
+                                location_status = "Office"
+                                break
+                            case 3:
+                                location_status = "Markets"
+                                break
+                            case 4: 
+                                location_status = ""
+                                break
+                            case value:
+                                print("please choose between options.")
+                    except ValueError:
+                        print("Please Enter a number not string")
+                        print("====================================")
+                location_status = location_status.lower()
+                data = input("search by Name/Address/Phone :").lower()
+                account.edit(location_status,data)
             case 4:
                 while True:
                     try:

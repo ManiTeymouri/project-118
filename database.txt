@@ -1,4 +1,4 @@
 {'location_status': 'residental', 'Name': 'mani', 'Phone': '02612345678', 'Address': 'karaj'}
 {'location_status': 'residental', 'Name': 'mmd', 'Phone': '02612345676', 'Address': 'karaj'}
 {'location_status': 'residental', 'Name': 'mohamad', 'Phone': '02612345673', 'Address': 'karaj'}
-{'location_status': 'residental', 'Name': 'reza', 'Phone': '02612345672', 'Address': 'karaj'}
+{'location_status': 'office', 'Name': 'Bank Mellat', 'Phone': '0', 'Address': '111'}
