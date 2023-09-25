@@ -131,7 +131,7 @@ class account:
                         choosed_account: dict = Listed_DATA[ask]
                         print(f"=====================================================")
                         print("choose what data do you want to change")
-                        print("1.Location_status\n2.Name,\n3.Phone\n4.Address\n5.all the datas in account")
+                        print("1.Location_status\n2.Name\n3.Phone\n4.Address\n5.all the datas in account")
                         option = int(input("Enter which data do you want to change :"))
                         match option:
                             case 1:

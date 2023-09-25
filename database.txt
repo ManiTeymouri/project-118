@@ -3,3 +3,4 @@
 {'location_status': 'residental', 'Name': 'mostafa', 'Phone': '02645678914', 'Address': 'karaj'}
 {'location_status': 'residental', 'Name': 'poyan', 'Phone': '02645678912', 'Address': 'karaj'}
 {'location_status': 'residental', 'Name': 'karim', 'Phone': '02645678911', 'Address': 'karaj'}
+{'location_status': 'office', 'Name': 'bank tejarat', 'Phone': '02656789123', 'Address': 'karaj'}
